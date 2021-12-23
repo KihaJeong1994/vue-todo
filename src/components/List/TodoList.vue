@@ -4,7 +4,7 @@
       <li v-for="(todoItem,index) in propsdata" :key="todoItem" class="shadow">
         <i class="checkBtn fas fa-check" aria-hidden="true"></i>
         {{todoItem}}
-        <span class="editBtn" type="button" @click="editTodo()">
+        <span class="editBtn" type="button" @click="editTodo(todoItem,index)">
           <i class="far fa-edit" aria-hidden="true"></i>
         </span>
         <span class="removeBtn" type="button" @click="removeTodo(todoItem,index)">
@@ -12,24 +12,58 @@
         </span>
       </li>
     </transition-group>
+    <editModal v-if="showEditModal" @close="showEditModal = false">
+      <!--
+        you can use custom content here to overwrite
+        default content
+      -->
+      <h3 slot="header">편집</h3>
+      <input slot="body" type="text"  v-model="chosenTodoItem">
+      <i slot="body" class="checkBtn fas fa-check" aria-hidden="true" @click="[editComplete(chosenTodoItem,chosenIdx),showEditModal = false]"></i>
+      <span slot="footer" @click="showEditModal = false">
+        <i class="closeModalBtn fas fa-times" aria-hidden="true"></i>
+      </span>
+    </editModal>
   </section>
+
+  
   
 </template>
 
 <script>
+import EditModal from '../common/Modal.vue'
 export default {
   props:['propsdata'],
+  data(){
+    return {
+      showEditModal:false,
+      chosenTodoItem : '',
+      chosenIdx : 0
+    }
+  },
   
   methods:{
-    editTodo(){
-
+    editTodo(todoItem,index){
+      console.log(todoItem,index);
+      this.showEditModal = true;
+      this.chosenTodoItem = todoItem;
+      this.chosenIdx = index;
+    },
+    editComplete(todoItem,index){
+      console.log(todoItem,index);
+      this.showEditModal = false;
+      this.$emit('editComplete',todoItem,index)
     },
     removeTodo(todoItem,index){
       // localStorage.removeItem(todoItem);
       // this.todoItems.splice(index,1);
       this.$emit('removeTodo',todoItem,index)
     }
+  },
+  components:{
+    editModal:EditModal
   }
+
 }
 </script>
 

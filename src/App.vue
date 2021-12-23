@@ -2,7 +2,7 @@
   <div id="app">
     <TodoHeader/>
     <TodoInput @addTodo="addTodo"/>
-    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"/>
+    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo" @editComplete="editComplete"/>
     <TodoFooter @removeAll="clearTodo"/>
   </div>
 </template>
@@ -30,6 +30,10 @@ export default {
     removeTodo(todoItem,index){
       localStorage.removeItem(todoItem);
       this.todoItems.splice(index,1);
+    },
+    editComplete(todoItem,index){
+      localStorage.setItem(this.todoItems[index],todoItem);
+      this.todoItems[index] = todoItem;
     }
   },
   created(){
