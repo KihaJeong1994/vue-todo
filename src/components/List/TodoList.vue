@@ -23,7 +23,7 @@
       <span slot="footer" @click="showEditModal = false">
         <i class="closeModalBtn fas fa-times" aria-hidden="true"></i>
       </span>
-    </editModal>
+    </editModal> 
   </section>
 
   
@@ -44,13 +44,11 @@ export default {
   
   methods:{
     editTodo(todoItem,index){
-      console.log(todoItem,index);
       this.showEditModal = true;
       this.chosenTodoItem = todoItem;
       this.chosenIdx = index;
     },
     editComplete(todoItem,index){
-      console.log(todoItem,index);
       this.showEditModal = false;
       this.$emit('editComplete',todoItem,index)
     },
