@@ -1,7 +1,7 @@
 <template>
   <section>
     <transition-group name="list" tag="ul">
-      <li v-for="(todoItem,index) in propsdata" :key="todoItem" class="shadow">
+      <li v-for="(todoItem,index) in this.$store.state.todoItems" :key="todoItem" class="shadow">
         <i class="checkBtn fas fa-check" aria-hidden="true"></i>
         {{todoItem}}
         <span class="editBtn" type="button" @click="editTodo(todoItem,index)">
@@ -33,7 +33,7 @@
 <script>
 import EditModal from '../common/Modal.vue'
 export default {
-  props:['propsdata'],
+  // props:['propsdata'],
   data(){
     return {
       showEditModal:false,
@@ -47,15 +47,18 @@ export default {
       this.showEditModal = true;
       this.chosenTodoItem = todoItem;
       this.chosenIdx = index;
+      console.log(index)
     },
     editComplete(todoItem,index){
       this.showEditModal = false;
-      this.$emit('editComplete',todoItem,index)
+      const editInfo = {'todoItem':todoItem,'index':index}
+      this.$store.commit('editComplete',editInfo)
     },
     removeTodo(todoItem,index){
       // localStorage.removeItem(todoItem);
       // this.todoItems.splice(index,1);
-      this.$emit('removeTodo',todoItem,index)
+      const removeInfo = {'todoItem':todoItem,'index':index}
+      this.$store.commit('removeTodo',removeInfo)
     }
   },
   components:{

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <TodoHeader/>
-    <TodoInput @addTodo="addTodo"/>
-    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo" @editComplete="editComplete"/>
-    <TodoFooter @removeAll="clearTodo"/>
+    <TodoInput/>
+    <TodoList v-bind:propsdata="todoItems"/>
+    <TodoFooter/>
   </div>
 </template>
 
@@ -19,30 +19,24 @@ export default {
     }
   },
   methods:{
-    addTodo(todoItem){
-      localStorage.setItem(todoItem,todoItem);
-      this.todoItems.push(todoItem);
-    },
-    clearTodo(){
-      localStorage.clear();
-      this.todoItems = [];
-    },
-    removeTodo(todoItem,index){
-      localStorage.removeItem(todoItem);
-      this.todoItems.splice(index,1);
-    },
-    editComplete(todoItem,index){
-      localStorage.setItem(this.todoItems[index],todoItem);
-      this.todoItems[index] = todoItem;
-    }
+    // addTodo(todoItem){
+    //   localStorage.setItem(todoItem,todoItem);
+    //   this.todoItems.push(todoItem);
+    // },
+    // clearTodo(){
+    //   localStorage.clear();
+    //   this.todoItems = [];
+    // },
+    // removeTodo(todoItem,index){
+    //   localStorage.removeItem(todoItem);
+    //   this.todoItems.splice(index,1);
+    // },
+    // editComplete(todoItem,index){
+    //   localStorage.setItem(this.todoItems[index],todoItem);
+    //   this.todoItems[index] = todoItem;
+    // }
   },
-  created(){
-    if(localStorage.length>0){
-      for(let i=0;i<localStorage.length;i++){
-        this.todoItems.push(localStorage.key(i))
-      }
-    }
-  },
+  
   components : {
     "TodoHeader":TodoHeader,
     "TodoFooter":TodoFooter,
