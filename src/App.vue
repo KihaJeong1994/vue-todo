@@ -2,7 +2,7 @@
   <div id="app">
     <TodoHeader/>
     <TodoInput/>
-    <TodoList v-bind:propsdata="todoItems"/>
+    <TodoList/>
     <TodoFooter/>
   </div>
 </template>
@@ -12,37 +12,18 @@ import TodoHeader from './components/Header/TodoHeader.vue'
 import TodoFooter from './components/Footer/TodoFooter.vue'
 import TodoList from './components/List/TodoList.vue'
 import TodoInput from './components/Input/TodoInput.vue'
+
+
+
 export default {
-  data(){
-    return{
-      todoItems:[]
-    }
-  },
-  methods:{
-    // addTodo(todoItem){
-    //   localStorage.setItem(todoItem,todoItem);
-    //   this.todoItems.push(todoItem);
-    // },
-    // clearTodo(){
-    //   localStorage.clear();
-    //   this.todoItems = [];
-    // },
-    // removeTodo(todoItem,index){
-    //   localStorage.removeItem(todoItem);
-    //   this.todoItems.splice(index,1);
-    // },
-    // editComplete(todoItem,index){
-    //   localStorage.setItem(this.todoItems[index],todoItem);
-    //   this.todoItems[index] = todoItem;
-    // }
-  },
   
   components : {
-    "TodoHeader":TodoHeader,
-    "TodoFooter":TodoFooter,
-    "TodoList":TodoList,
-    "TodoInput":TodoInput
-  }
+    TodoHeader,
+    TodoFooter,
+    TodoList,
+    TodoInput
+  },
+  
 }
 </script>
 

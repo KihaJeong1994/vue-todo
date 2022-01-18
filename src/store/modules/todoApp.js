@@ -1,9 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import * as getters from './getters'
-import * as mutations from './mutations'
-
-Vue.use(Vuex);
+import * as getters from '../getters'
+import * as mutations from '../mutations'
 
 const storage = {
     fetch(){
@@ -17,10 +13,13 @@ const storage = {
     }
 }
 
-export const store = new Vuex.Store({
-    state:{
-        todoItems : storage.fetch()
-    },
+const state = {
+    todoItems : storage.fetch()
+}
+
+
+export default{
+    state,
     getters,
     mutations
-})
+}

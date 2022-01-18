@@ -1,13 +1,13 @@
 <template>
   <section>
     <transition-group name="list" tag="ul">
-      <li v-for="(todoItem,index) in this.$store.state.todoItems" :key="todoItem" class="shadow">
+      <li v-for="(todoItem,index) in this.todoItems" :key="todoItem" class="shadow">
         <i class="checkBtn fas fa-check" aria-hidden="true"></i>
         {{todoItem}}
         <span class="editBtn" type="button" @click="editTodo(todoItem,index)">
           <i class="far fa-edit" aria-hidden="true"></i>
         </span>
-        <span class="removeBtn" type="button" @click="removeTodo(todoItem,index)">
+        <span class="removeBtn" type="button" @click="removeTodo({todoItem,index})">
           <i class="far fa-trash-alt" aria-hidden="true"></i>
         </span>
       </li>
@@ -32,6 +32,7 @@
 
 <script>
 import EditModal from '../common/Modal.vue'
+import {mapState,mapGetters,mapMutations} from 'vuex'
 export default {
   // props:['propsdata'],
   data(){
@@ -43,27 +44,27 @@ export default {
   },
   
   methods:{
+    ...mapMutations({
+        removeTodo:'removeTodo'
+    }),
     editTodo(todoItem,index){
       this.showEditModal = true;
       this.chosenTodoItem = todoItem;
       this.chosenIdx = index;
-      console.log(index)
     },
     editComplete(todoItem,index){
       this.showEditModal = false;
-      const editInfo = {'todoItem':todoItem,'index':index}
+      const editInfo = {todoItem,index}
       this.$store.commit('editComplete',editInfo)
     },
-    removeTodo(todoItem,index){
-      // localStorage.removeItem(todoItem);
-      // this.todoItems.splice(index,1);
-      const removeInfo = {'todoItem':todoItem,'index':index}
-      this.$store.commit('removeTodo',removeInfo)
-    }
   },
   components:{
     editModal:EditModal
-  }
+  },
+  computed :{
+      ...mapState(['todoItems']),
+      ...mapGetters(['storedTodoItems']),
+  },
 
 }
 </script>
